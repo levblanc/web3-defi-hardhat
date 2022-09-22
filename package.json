@@ -9,6 +9,7 @@
     "coverage": "yarn hardhat coverage"
   },
   "devDependencies": {
+    "@aave/core-v3": "^1.16.2",
     "@chainlink/contracts": "^0.4.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",

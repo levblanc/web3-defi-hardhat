@@ -3,13 +3,19 @@ require('hardhat-deploy');
 require('hardhat-contract-sizer');
 require('dotenv').config();
 
-const { RINKEBY_RPC_URL, GOERLI_RPC_URL, PRIVATE_KEY, ETHERSCAN_API_KEY } =
-  process.env;
+const {
+  RINKEBY_RPC_URL,
+  GOERLI_RPC_URL,
+  MAINNET_RPC_URL,
+  PRIVATE_KEY,
+  ETHERSCAN_API_KEY,
+} = process.env;
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
     compilers: [
+      { version: '0.8.10' },
       { version: '0.8.8' },
       { version: '0.8.4' },
       { version: '0.4.19' },
@@ -18,6 +24,14 @@ module.exports = {
   defaultNetwork: 'hardhat',
   networks: {
     hardhat: {
+      chainId: 31337,
+      blockConfirmations: 1,
+      forking: {
+        // url: GOERLI_RPC_URL,
+        url: MAINNET_RPC_URL,
+      },
+    },
+    localhost: {
       chainId: 31337,
       blockConfirmations: 1,
     },

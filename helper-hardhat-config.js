@@ -1,37 +1,28 @@
 const { ethers } = require('hardhat');
 
 const networkConfig = {
+  31337: {
+    name: 'hardhat',
+    // mainnet WETH token, forking mainnet on local hardhat
+    wethToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    // Polygon mainnet deployed contract address:
+    // https://docs.aave.com/developers/deployed-contracts/v3-mainnet/polygon
+    poolAddressProvider: '0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb',
+  },
   4: {
     name: 'rinkeby',
-    vrfCoordinatorV2: '0x6168499c0cFfCaCD319c818142124B7A15E857ab',
-    entranceFee: ethers.utils.parseEther('0.01'),
-    // 30 gwei Key Hash
-    gasLane:
-      '0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc',
-    subscriptionId: '22149',
-    callbackGasLimit: '500000',
-    interval: '30',
+    wethToken: '0xc778417E063141139Fce010982780140Aa0cD5Ab',
+    // Rinkeby testnet deployed contract address:
+    // https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
+    poolAddressProvider: '0xBA6378f1c1D046e9EB0F538560BA7558546edF3C',
   },
   // https://docs.chain.link/docs/vrf/v2/supported-networks/#goerli-testnet
   5: {
     name: 'goerli',
-    vrfCoordinatorV2: '0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D',
-    entranceFee: ethers.utils.parseEther('0.01'),
-    // 30 gwei Key Hash
-    gasLane:
-      '0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15',
-    subscriptionId: '1490',
-    callbackGasLimit: '500000',
-    interval: '30',
-  },
-  31337: {
-    name: 'hardhat',
-    entranceFee: ethers.utils.parseEther('0.01'),
-    // 30 gwei Key Hash
-    gasLane:
-      '0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15',
-    callbackGasLimit: '500000',
-    interval: '30',
+    wethToken: '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+    // Goerli testnet deployed contract address:
+    // https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
+    poolAddressProvider: '0xc4dCB5126a3AfEd129BC3668Ea19285A9f56D15D',
   },
 };
 
