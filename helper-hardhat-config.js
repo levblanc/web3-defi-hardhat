@@ -5,6 +5,8 @@ const networkConfig = {
     name: 'hardhat',
     // mainnet WETH token, forking mainnet on local hardhat
     wethToken: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    // WETH token on Polygon mainnet
+    // wethToken: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
     // Polygon mainnet deployed contract address:
     // https://docs.aave.com/developers/deployed-contracts/v3-mainnet/polygon
     poolAddressProvider: '0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb',

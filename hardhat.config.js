@@ -7,6 +7,7 @@ const {
   RINKEBY_RPC_URL,
   GOERLI_RPC_URL,
   MAINNET_RPC_URL,
+  POLYGON_RPC_URL,
   PRIVATE_KEY,
   ETHERSCAN_API_KEY,
 } = process.env;
@@ -27,8 +28,7 @@ module.exports = {
       chainId: 31337,
       blockConfirmations: 1,
       forking: {
-        // url: GOERLI_RPC_URL,
-        url: MAINNET_RPC_URL,
+        url: POLYGON_RPC_URL,
       },
     },
     localhost: {
