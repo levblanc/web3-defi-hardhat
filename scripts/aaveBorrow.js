@@ -6,7 +6,6 @@ async function main() {
   await getWeth();
   const { deployer } = await getNamedAccounts();
   const lendingPool = await getLendingPool(deployer);
-  console.log('>>>>>> lending pool address:', lendingPool);
 }
 
 async function getLendingPool(account) {
@@ -18,22 +17,15 @@ async function getLendingPool(account) {
     account
   );
 
-  console.log(
-    '>>>>>> lendingPoolAddressProvider.getLendingPool',
-    lendingPoolAddressProvider.getLendingPool
+  const lendingPoolAddress = await lendingPoolAddressProvider.getLendingPool();
+
+  const lendingPool = await ethers.getContractAt(
+    'ILendingPool',
+    lendingPoolAddress,
+    account
   );
 
-  const lendingPoolAddress = await lendingPoolAddressProvider.getLendingPool();
-  console.log('>>>>>> lendingPoolAddress', lendingPoolAddress);
-
-  // const lendingPool = await ethers.getContractAt(
-  //   'ILendingPool',
-  //   lendingPoolAddress,
-  //   account
-  // );
-
-  // return lendingPool;
-  return 'fake result str';
+  return lendingPool;
 }
 
 main()
