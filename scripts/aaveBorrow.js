@@ -13,21 +13,21 @@ async function getLendingPool(account) {
   const { chainId } = network.config;
   const { poolAddressProvider } = networkConfig[chainId];
   const lendingPoolAddressProvider = await ethers.getContractAt(
-    'IPoolAddressesProvider',
+    'ILendingPoolAddressesProvider',
     poolAddressProvider,
     account
   );
 
   console.log(
-    '>>>>>> lendingPoolAddressProvider.getPool',
-    lendingPoolAddressProvider.getPool
+    '>>>>>> lendingPoolAddressProvider.getLendingPool',
+    lendingPoolAddressProvider.getLendingPool
   );
 
-  const lendingPoolAddress = await lendingPoolAddressProvider.getPool();
+  const lendingPoolAddress = await lendingPoolAddressProvider.getLendingPool();
   console.log('>>>>>> lendingPoolAddress', lendingPoolAddress);
 
   // const lendingPool = await ethers.getContractAt(
-  //   'IPool',
+  //   'ILendingPool',
   //   lendingPoolAddress,
   //   account
   // );

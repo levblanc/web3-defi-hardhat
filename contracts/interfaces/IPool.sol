@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.8;
+pragma solidity ^0.6.12;
 
-import '@aave/core-v3/contracts/interfaces/IPool.sol';
+import '@aave/protocol-v2/contracts/interfaces/ILendingPool.sol';
