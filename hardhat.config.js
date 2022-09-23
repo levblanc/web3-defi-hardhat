@@ -6,7 +6,7 @@ require('dotenv').config();
 const {
   RINKEBY_RPC_URL,
   GOERLI_RPC_URL,
-  MAINNET_RPC_URL,
+  ETHEREUM_MAINNET_RPC_URL,
   PRIVATE_KEY,
   ETHERSCAN_API_KEY,
 } = process.env;
@@ -29,7 +29,7 @@ module.exports = {
       blockConfirmations: 1,
       forking: {
         // url: GOERLI_RPC_URL,
-        url: MAINNET_RPC_URL,
+        url: ETHEREUM_MAINNET_RPC_URL,
       },
     },
     localhost: {
