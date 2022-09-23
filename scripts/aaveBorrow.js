@@ -6,18 +6,21 @@ async function main() {
   await getWeth();
   const { deployer } = await getNamedAccounts();
   const lendingPool = await getLendingPool(deployer);
+
+  console.log('lendingPool', lendingPool.address);
 }
 
 async function getLendingPool(account) {
   const { chainId } = network.config;
-  const { poolAddressProvider } = networkConfig[chainId];
-  const lendingPoolAddressProvider = await ethers.getContractAt(
+  const { poolAddressesProvider } = networkConfig[chainId];
+  const lendingPoolAddressesProvider = await ethers.getContractAt(
     'ILendingPoolAddressesProvider',
-    poolAddressProvider,
+    poolAddressesProvider,
     account
   );
 
-  const lendingPoolAddress = await lendingPoolAddressProvider.getLendingPool();
+  const lendingPoolAddress =
+    await lendingPoolAddressesProvider.getLendingPool();
 
   const lendingPool = await ethers.getContractAt(
     'ILendingPool',
