@@ -3,6 +3,8 @@ const { networkConfig } = require('../helper-hardhat-config');
 
 const AMOUNT = ethers.utils.parseEther('0.02');
 
+// WETH is a way to tokenize the Ethereum / layer 1 blockchain native token
+// https://weth.io/
 async function getWeth() {
   const { deployer } = await getNamedAccounts();
   const { chainId } = network.config;
