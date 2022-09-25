@@ -7,7 +7,7 @@ async function main() {
 
   const { deployer } = await getNamedAccounts();
   const { chainId } = network.config;
-  const { wethToken } = networkConfig[chainId];
+  const { wethToken, daiAddress } = networkConfig[chainId];
 
   const lendingPool = await getLendingPool(deployer);
 
@@ -36,6 +36,11 @@ async function main() {
     daiBorrowAmount.toString()
   );
   console.log('>>>>>> daiBorrowAmountInWei', daiBorrowAmountInWei);
+
+  await borrowDai(lendingPool, daiAddress, daiBorrowAmountInWei, deployer);
+
+  // check user account after borrowing
+  await getBorrowUserData(lendingPool, deployer);
 }
 
 async function getLendingPool(account) {
@@ -80,10 +85,10 @@ async function getBorrowUserData(lendingPool, account) {
   const { totalCollateralETH, totalDebtETH, availableBorrowsETH } =
     await lendingPool.getUserAccountData(account);
 
-  console.log('>>>>> Worth of ETH deposited:', totalCollateralETH.toString());
-  console.log('>>>>> Worth of ETH borrowed:', totalDebtETH.toString());
+  console.log('>>>>>> Worth of ETH deposited:', totalCollateralETH.toString());
+  console.log('>>>>>> Worth of ETH borrowed:', totalDebtETH.toString());
   console.log(
-    '>>>>> Worth of ETH you can borrow:',
+    '>>>>>> Worth of ETH you can borrow:',
     availableBorrowsETH.toString()
   );
 
@@ -108,6 +113,20 @@ async function getDaiPrice() {
   console.log('>>>>>> DAI/ETH price:', price);
 
   return price;
+}
+
+async function borrowDai(lendingPool, daiAddress, daiAmountInWei, account) {
+  const borrowTx = await lendingPool.borrow(
+    daiAddress,
+    daiAmountInWei,
+    1,
+    0,
+    account
+  );
+
+  await borrowTx.wait(1);
+
+  console.log('>>>>>> Borrowed!');
 }
 
 main()
