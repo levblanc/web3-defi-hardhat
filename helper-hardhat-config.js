@@ -8,6 +8,7 @@ const networkConfig = {
     // Ethereum mainnet deployed contract address:
     // https://docs.aave.com/developers/v/2.0/deployed-contracts/deployed-contracts
     poolAddressesProvider: '0xB53C1a33016B2DC2fF3653530bfF1848a515c8c5',
+    aggregatorV3InterfaceAddress: '0x773616E4d11A78F511299002da57A0a94577F1f4',
   },
   5: {
     name: 'goerli',
@@ -15,6 +16,8 @@ const networkConfig = {
     // Goerli testnet deployed contract address:
     // https://docs.aave.com/developers/v/2.0/deployed-contracts/deployed-contracts
     poolAddressesProvider: '0x5E52dEc931FFb32f609681B8438A51c675cc232d',
+    // DAI / USD
+    aggregatorV3InterfaceAddress: '0x0d79df66BE487753B02D015Fb622DED7f0E9798d',
   },
 };
 

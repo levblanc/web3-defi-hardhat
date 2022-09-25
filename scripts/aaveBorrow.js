@@ -19,10 +19,23 @@ async function main() {
   await lendingPool.deposit(wethToken, AMOUNT, deployer, 0);
   console.log('>>>>>> Deposited!');
 
+  const daiPrice = await getDaiPrice();
   const { availableBorrowsETH, totalDebtETH } = await getBorrowUserData(
     lendingPool,
     deployer
   );
+
+  // Borrow 95% of avaiale ETH, not using 100% of our collaterals, to be safe.
+  const ethBorrowAmount = availableBorrowsETH.toString() * 0.95;
+  console.log('>>>>>> ethBorrowAmount', ethBorrowAmount);
+
+  const daiBorrowAmount = ethBorrowAmount / daiPrice;
+  console.log('>>>>>> daiBorrowAmount', daiBorrowAmount);
+
+  const daiBorrowAmountInWei = ethers.utils.parseEther(
+    daiBorrowAmount.toString()
+  );
+  console.log('>>>>>> daiBorrowAmountInWei', daiBorrowAmountInWei);
 }
 
 async function getLendingPool(account) {
@@ -75,6 +88,26 @@ async function getBorrowUserData(lendingPool, account) {
   );
 
   return { availableBorrowsETH, totalDebtETH };
+}
+
+// Get DAI price with Chainlink price feed
+async function getDaiPrice() {
+  const { chainId } = network.config;
+  const { aggregatorV3InterfaceAddress } = networkConfig[chainId];
+
+  // No transaction needed, so no need to pass account as third param
+  const daiEthPrice = await ethers.getContractAt(
+    'AggregatorV3Interface',
+    aggregatorV3InterfaceAddress
+  );
+
+  const priceData = await daiEthPrice.latestRoundData();
+  // console.log('>>>>>> priceData:', priceData);
+
+  const price = priceData[1].toString();
+  console.log('>>>>>> DAI/ETH price:', price);
+
+  return price;
 }
 
 main()
