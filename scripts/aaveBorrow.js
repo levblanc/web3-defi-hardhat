@@ -2,6 +2,7 @@ const { getWeth, AMOUNT } = require('./getWeth');
 const { networkConfig } = require('../helper-hardhat-config');
 const { network, ethers, getNamedAccounts } = require('hardhat');
 
+// Note: we can actually gain interest by depositing our tokens and our assets to aave
 async function main() {
   await getWeth();
 
@@ -11,11 +12,12 @@ async function main() {
 
   const lendingPool = await getLendingPool(deployer);
 
-  // Approve
+  // Approve `lendingPool` to deposit (take away) certain `amount` of weth token
+  // on behalf of the `deployer`
   await approveERC20(wethToken, lendingPool.address, AMOUNT, deployer);
   console.log('>>>>>> Depositing...');
 
-  // Deposit
+  // Deposit weth token into lending pool
   await lendingPool.deposit(wethToken, AMOUNT, deployer, 0);
   console.log('>>>>>> Deposited!');
 
@@ -39,7 +41,12 @@ async function main() {
 
   await borrowDai(lendingPool, daiAddress, daiBorrowAmountInWei, deployer);
 
-  // check user account after borrowing
+  // check user account after borrow
+  await getBorrowUserData(lendingPool, deployer);
+
+  await repayDai(lendingPool, daiAddress, daiBorrowAmountInWei, deployer);
+
+  // check user account after repay
   await getBorrowUserData(lendingPool, deployer);
 }
 
@@ -64,6 +71,8 @@ async function getLendingPool(account) {
   return lendingPool;
 }
 
+// Anytime you want a contract to interact with your tokens
+// You need to approve the contract to do so
 async function approveERC20(
   erc20Address,
   spenderAddress,
@@ -116,17 +125,35 @@ async function getDaiPrice() {
 }
 
 async function borrowDai(lendingPool, daiAddress, daiAmountInWei, account) {
+  // https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#borrow
   const borrowTx = await lendingPool.borrow(
     daiAddress,
     daiAmountInWei,
-    1,
-    0,
-    account
+    1, // interestRateMode, the type of borrow debt. Stable: 1, Variable: 2
+    0, // referral code for Aave referral program. Use 0 for no referral code.
+    account // address of user who will incur the debt.
   );
 
   await borrowTx.wait(1);
 
   console.log('>>>>>> Borrowed!');
+}
+
+async function repayDai(lendingPool, daiAddress, daiAmountInWei, account) {
+  // Approve
+  await approveERC20(daiAddress, lendingPool.address, daiAmountInWei, account);
+
+  // Repay
+  // https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#repay
+  const repayTx = await lendingPool.repay(
+    daiAddress,
+    daiAmountInWei,
+    1, // rateMode, the type of borrow debt. Stable: 1, Variable: 2
+    account // address of user who will incur the debt.
+  );
+  await repayTx.wait(1);
+
+  console.log('>>>>>> Repaid!');
 }
 
 main()
