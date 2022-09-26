@@ -1,12 +1,10 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "test": "yarn hardhat test",
-    "test:staging": "yarn hardhat test --network goerli",
+    "borrow": "yarn hardhat run ./scripts/aaveBorrow.js",
     "lint": "yarn solhint 'contract/*.sol'",
     "lint:fix": "yarn solhint 'contract/*.sol' --fix",
-    "format": "yarn prettier --write .",
-    "coverage": "yarn hardhat coverage"
+    "format": "yarn prettier --write ."
   },
   "devDependencies": {
     "@aave/protocol-v2": "^1.0.1",
