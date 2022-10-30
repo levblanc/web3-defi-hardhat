@@ -1,10 +1,10 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "borrow": "yarn hardhat run ./scripts/aaveBorrow.js",
-    "lint": "yarn solhint 'contract/*.sol'",
-    "lint:fix": "yarn solhint 'contract/*.sol' --fix",
-    "format": "yarn prettier --write ."
+    "borrow": "hardhat run ./scripts/aaveBorrow.js",
+    "lint": "solhint 'contract/*.sol'",
+    "lint:fix": "solhint 'contract/*.sol' --fix",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@aave/protocol-v2": "^1.0.1",
