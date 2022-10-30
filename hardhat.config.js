@@ -6,8 +6,7 @@ require('dotenv').config();
 const {
   RINKEBY_RPC_URL,
   GOERLI_RPC_URL,
-  MAINNET_RPC_URL,
-  POLYGON_RPC_URL,
+  ETHEREUM_MAINNET_RPC_URL,
   PRIVATE_KEY,
   ETHERSCAN_API_KEY,
 } = process.env;
@@ -19,6 +18,7 @@ module.exports = {
       { version: '0.8.10' },
       { version: '0.8.8' },
       { version: '0.8.4' },
+      { version: '0.6.12' },
       { version: '0.4.19' },
     ],
   },
@@ -28,7 +28,8 @@ module.exports = {
       chainId: 31337,
       blockConfirmations: 1,
       forking: {
-        url: POLYGON_RPC_URL,
+        // url: GOERLI_RPC_URL,
+        url: ETHEREUM_MAINNET_RPC_URL,
       },
     },
     localhost: {
@@ -55,9 +56,7 @@ module.exports = {
   namedAccounts: {
     deployer: {
       default: 0,
-    },
-    player: {
-      default: 1,
+      // 1: 0,
     },
   },
   etherscan: {

@@ -1,15 +1,13 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "test": "yarn hardhat test",
-    "test:staging": "yarn hardhat test --network goerli",
+    "borrow": "yarn hardhat run ./scripts/aaveBorrow.js",
     "lint": "yarn solhint 'contract/*.sol'",
     "lint:fix": "yarn solhint 'contract/*.sol' --fix",
-    "format": "yarn prettier --write .",
-    "coverage": "yarn hardhat coverage"
+    "format": "yarn prettier --write ."
   },
   "devDependencies": {
-    "@aave/core-v3": "^1.16.2",
+    "@aave/protocol-v2": "^1.0.1",
     "@chainlink/contracts": "^0.4.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
